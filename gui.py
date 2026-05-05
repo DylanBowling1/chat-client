@@ -11,14 +11,24 @@ client = subprocess.Popen(
     text=True
 )
 
+def add_message(text):
+    chat_box.config(state="normal")
+    chat_box.insert(tk.END, text)
+    chat_box.see(tk.END)
+    chat_box.config(state="disabled")
+
 def read_output():
     while True:
         line = client.stdout.readline()
         if line:
-            chat_box.insert(tk.END, line)
+            add_message(line)
 
 def send_message():
     msg = entry.get()
+
+    if msg.strip() == "":
+        return
+
     client.stdin.write(msg + "\n")
     client.stdin.flush()
     entry.delete(0, tk.END)
@@ -26,7 +36,7 @@ def send_message():
 root = tk.Tk()
 root.title("Chat Client GUI")
 
-chat_box = tk.Text(root, height=20, width=60)
+chat_box = tk.Text(root, height=20, width=60, state="disabled")
 chat_box.pack()
 
 entry = tk.Entry(root, width=50)
