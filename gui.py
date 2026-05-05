@@ -36,9 +36,25 @@ def send_message():
 root = tk.Tk()
 root.title("Chat Client GUI")
 
-chat_box = tk.Text(root, height=20, width=60, state="disabled")
-chat_box.pack()
+# chat + scrollbar frame
+chat_frame = tk.Frame(root)
+chat_frame.pack()
 
+scrollbar = tk.Scrollbar(chat_frame)
+scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+chat_box = tk.Text(
+    chat_frame,
+    height=20,
+    width=60,
+    state="disabled",
+    yscrollcommand=scrollbar.set
+)
+chat_box.pack(side=tk.LEFT)
+
+scrollbar.config(command=chat_box.yview)
+
+# input area
 entry = tk.Entry(root, width=50)
 entry.pack(side=tk.LEFT)
 entry.bind("<Return>", lambda event: send_message())
