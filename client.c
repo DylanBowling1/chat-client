@@ -263,6 +263,9 @@ static void *receiver(void *arg) {
  */
 
 int main(int argc, char **argv) {
+    // for GUI
+    setvbuf(stdout, NULL, _IONBF, 0);
+    setvbuf(stderr, NULL, _IONBF, 0);
     /*
      * Default connection settings
      */
